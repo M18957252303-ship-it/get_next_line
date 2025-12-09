@@ -57,28 +57,55 @@ line:strjoin:hello\n\0
 checkif:y
 return(line);
 
-char    *ft_newline(char *buf, char *left)
+char    *extract_line(char *buf)
 {
     int i;
     int j;
-    int l;
     char    *new;
 
     i = 0;
     j = 0;
-    l = 0;
+    if(!buf)
+		return(NULL);
     while(buf[i] != '\0' && buf[i] != '\n')
         i++;
-    new = malloc(i + 1);
+    new = malloc(i + 2);
     while(j <= i)
-        new[j++] = buf[j++];
+	{
+		new[j] = buf[j];
+		j++;
+	}
     new[j] = '\0';
-    while(j < strlen(buf))
-        left[l++] = buf[j++];
-    left[l] = '\0';
     return(new);
 }
 
+char	*extract_left(char *buf)
+{
+	int	i;
+	int	j;
+	int	len;
+	char	*left;
+
+	i = 0;
+	j = 0;
+	if(!buf || buf[i] == '\0')
+		return(NULL);
+	while(buf[i] != '\n' && buf[i] != '\0')
+		i++;
+	if(buf[i] == '\0')
+		return(NULL);
+	i++;
+	len = strlen(buf + i);
+	left = malloc(len + 1);
+	if(!left)
+		return(NULL);
+	while(buf[i] != '\0')
+		left[j++] = buf[i++];
+	left[j] = '\0';
+	return(left);
+}
+		
+	
 char    ft_cpytilln
 //check if str has \n, find first \n and return substr till \n and change
 // str to new str start after the first \n 
